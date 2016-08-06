@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql:5.5
+    volumes:
+      - "./.data/mysql:/var/lib/mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  mongo:
+    image: mongo:3.0
+    volumes:
+      - "./.data/mongo:/var/lib/mongo"
+    restart: always
+
+  wordpress-xhgui:
+    depends_on:
+      - mysql
+      - mongo
+    image: kuga/wordpress-xhgui
+    links:
+      - mysql
+      - mongo
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    restart: always
+    environment:
+      WORDPRESS_MONGO_HOST: mongo
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_PORT: 3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    tty: true

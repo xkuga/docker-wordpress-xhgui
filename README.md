@@ -9,10 +9,5 @@ Run containers
 
     docker-compose up
 
-Wordpress
+Wordpress: 127.0.0.1:8080, XHGui: 127.0.0.1:8081
 
-    127.0.0.1:8080
-
-XHGui
-
-    127.0.0.1:8081
